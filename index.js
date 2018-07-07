@@ -6,6 +6,9 @@
  */
 
  const request = require('request');
+ 
+ // require and load dotenv
+ const dotenv = require('dotenv');
 
  /**Adding interactivity
   * In order to access weather information of different cities/Location
@@ -19,16 +22,22 @@
 
   const argv = require('yargs').argv;
 
+ 
+  
   //We'll use the flag of c for city
   //So we gon have our city variable equal either argv.c Or if no variable is input,
   //we'll have a default city value of lagos.
   
   let city = argv.c || 'lagos';
 
+//path to .env file that holds the API keys
+  dotenv.load({path:'./.env.weatherkeys'});
+
+
  //The url we are making request to
- let apiKey = '69161c6b38495e7f55a5417858ced395';
+let MY_API_KEY = process.env.MY_API_KEY;
  /* let city = 'lagos'; */
- let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+ let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${MY_API_KEY}`;
 //note that OpenWeatherMap defaults its temperature to kelvin. 
 //if you want temperature details to be returned in either Celsius or Fahrenheit we need to add another query parameter to the url.
 //For celsius : units=metric
@@ -36,9 +45,9 @@
 
  request(url, function(err, res, body) {
      if(err){
-         console.log('error: ', error);
+         console.log('error: ', err);
      } else {
-        /*  console.log('body: ', body); */
+        /*  console.log('body: ', body); */ 
 
      /**if you notice the information printed by logging just the body in the console are kinda scattered.
          * So we convert the JSON response into a javascript object  
