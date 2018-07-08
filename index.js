@@ -58,8 +58,3 @@ let MY_API_KEY = process.env.MY_API_KEY;
          console.log(message);
      };
  });
-
-
- 
-
- 
